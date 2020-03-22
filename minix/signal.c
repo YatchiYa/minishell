@@ -12,10 +12,5 @@ void	signal_handler(int signo)
 
 void	signal_handler2(int signo)
 {
-	if (signo == SIGBREAK)
-	{
-		ft_putstr("\n");
-		exit_shell();
-		signal(SIGBREAK, signal_handler);
-	}
+	printf(" debug signal [%d]\n", signo);
 }

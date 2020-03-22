@@ -12,15 +12,18 @@
 # include <dirent.h>
 # include <stddef.h>
 # include <string.h>
+# include <fcntl.h>
+# include <math.h>
 # include "gnl/get_next_line.h"
 
 # define IS_QUOTE(x) (x == '"' || x == '\'')
 
 char	        **g_envv;
+char            *oldpath;
 
 
 void	        *ft_memalloc(size_t size);
-int             envv_len(char **envv);
+char		    **ft_strsplit(char const *s, char c);
 void	        ft_freestrarr(char **arr);
 void	        exit_shell(void);
 void			init_envv(int ac, char **av, char **envv);
@@ -38,5 +41,23 @@ char			**split_commande(char *line);
 void    		handle_echo(char *str);
 void			handle_pwd(void);
 void			signal_handler2(int signo);
+void		    handle_touch(char *str);
+void		    handle_rm(char *str);
+void			handle_cd(char *path);
+void	        set_env_var(char *key, char *value);
+char	        **realloc_envv(int new_size);
+int		        find_env_var(char *var);
+char            **ft_split(char *str, char *charset);
+void            handle_env(char *cmd, char *arg);
+void			print_env(void);
+int		        envv_len(char **envv);
+void    		remove_env_var(int var_pos);
+void		    handle_export(char *str);
+void		    handle_unset(char *str);
+char            *malloc_sortie(int len);
+int		        calc_c(char *str, char c);
+char		    *parse_dollar(char *str);
+char			*trim_quote(char *str, int *ret, int *xet);
+int		        only_point(char *str);
 
 #endif // !MINISHELL_H

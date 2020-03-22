@@ -24,18 +24,6 @@ void	*ft_memalloc(size_t size)
 	return (mem);
 }
 
-int		envv_len(char **envv)
-{
-	int		i;
-	int		count;
-
-	i = -1;
-	count = 0;
-	while (envv[++i])
-		count++;
-	return (count);
-}
-
 void	ft_putstr(char *str)
 {
 	int	i;
@@ -121,4 +109,16 @@ char	**split_commande(char *line)
 		dest[1][i] = line[i];
 	dest[1][i] =  '\0';
 	return (dest);
+}
+
+int		only_point(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] == '.')
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	return (0);
 }
