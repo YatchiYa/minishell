@@ -1,3 +1,4 @@
+
 #include "minishell.h"
 
 void		handle_touch(char *str)

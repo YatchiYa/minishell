@@ -81,7 +81,7 @@ void		parse_line(char *line)
 	else if (strcmp(str[0], "echo") == 0 || strcmp(str[0], "/bin/echo") == 0)
 		handle_echo(str[1]);
 	else if (strcmp(str[0], "pwd") == 0 || strcmp(str[0], "/bin/pwd") == 0)
-		handle_pwd();
+		handle_pwd(str[1]);
 	else if (strcmp(str[0], "cd") == 0 || strcmp(str[0], "/bin/cd") == 0)
 		handle_cd(str[1]);
 	else if (strcmp(str[0], "env") == 0 || strcmp(str[0], "/bin/env") == 0)

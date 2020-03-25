@@ -14,10 +14,10 @@ void	minishell(char **envv)
 	{
 		line = NULL;
 		display_prompt_msg();
-		signal(SIGINT, signal_handler);
+		signal(SIGINT, signal_handler2);
+		signal(SIGQUIT, signal_handler2);
+		signal(SIGKILL, signal_handler2);
 		ret = get_next_line(0, &line);
-		if (strcmp(line, "^d") == 0 || strcmp(line, "^D") == 0)
-			exit_shell();
 		tab = ft_strsplit(line, ';');
 		ret = 0;
 		while (tab[ret])

@@ -1,5 +1,17 @@
 #include "minishell.h"
 
+void	display(char *cwd, int i)
+{
+	cwd = ft_substr(cwd, i, ft_strlenx(cwd));
+	cwd = ft_strjoin("~", cwd);
+	ft_putstr(" \033[31m");
+	ft_putstr(cwd);
+	ft_putstr("\033[0m");
+	ft_putstr("\033[32m");
+	ft_putstr("$ ");
+	ft_putstr("\033[0m");
+}
+
 void	display_prompt_msg(void)
 {
 	char	*cwd;
@@ -15,18 +27,21 @@ void	display_prompt_msg(void)
 	i = 0;
 	while (cwd[i]  && ret < 3)
 	{
-		if (cwd[i] == '\\')
+		if (cwd[i] == '/')
 			ret++;
 		i++;
 	}
-	cwd = ft_substr(cwd, i, ft_strlenx(cwd));
-	cwd = ft_strjoin("~", cwd);
-	ft_putstr(" \033[31m");
-	ft_putstr(cwd);
-	ft_putstr("\033[0m");
-	ft_putstr("\033[32m");
-	ft_putstr("$ ");
-	ft_putstr("\033[0m");
+	if (ret < 3)
+	{
+		ft_putstr(" \033[31m");
+		ft_putstr(cwd);
+		ft_putstr("\033[0m");
+		ft_putstr("\033[32m");
+		ft_putstr("$ ");
+		ft_putstr("\033[0m");
+	}
+	else
+		display(cwd, i);
 	free(parsed_cwd);
 	free(buff);
 }

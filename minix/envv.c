@@ -1,5 +1,20 @@
 #include "minishell.h"
 
+char			*get_all_env(void)
+{
+	int		i;
+	char		*buff;
+
+	i = -1;
+	buff = strdup(" ");
+	while (g_envv[++i])
+	{
+		buff = ft_strjoin(buff, g_envv[i]);
+		i++;
+	}
+	return (buff);
+}
+
 void			print_env(void)
 {
 	int		i;
@@ -45,7 +60,19 @@ void			remove_env_var(int var_pos)
 
 void			handle_env(char *cmd, char *arg)
 {
-	if (strcmp(arg, "\0") != 0)
+	char	*tmp;
+
+	tmp = strdup(" ");
+	while (*arg && *arg == ' ')
+		*arg++;
+	if (arg[0] == '>')
+	{
+		tmp = get_all_env();
+		tmp = ft_strjoin(tmp, " ");
+		tmp = ft_strjoin(tmp, arg);
+		handle_redirect(tmp);
+	}
+	else if (strcmp(arg, "\0") != 0)
 		ft_putstr("env : no such file or directory \n");
 	else
 		print_env();

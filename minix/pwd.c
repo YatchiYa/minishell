@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void		handle_pwd(void)
+void		handle_pwd(char *str)
 {
 	char	*cwd;
 	char	*buff;
@@ -9,8 +9,17 @@ void		handle_pwd(void)
 	if (!(buff = malloc(sizeof(char) * 4097)))
 		return ;
 	cwd = getcwd(buff, 4096);
-	ft_putstr(cwd);
-	ft_putstr("\n");
-	free(parsed_cwd);
-	free(buff);
+	if (ssx(str, ">|<") == 1)
+	{
+		cwd = ft_strjoin(cwd, " ");
+		str = ft_strjoin(cwd, str);
+		handle_redirect(str);
+	}
+	else
+	{
+		ft_putstr(cwd);
+		ft_putstr("\n");
+		free(parsed_cwd);
+		free(buff);
+	}
 }

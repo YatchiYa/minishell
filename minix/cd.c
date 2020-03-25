@@ -69,23 +69,8 @@ void			cd_complex(void)
 void	cd_handle_home(void)
 {
 	char	*cwd;
-	char	*buff;
-	char	*parsed_cwd;
-	int		ret;
-	int		i;
 
-	if (!(buff = malloc(sizeof(char) * 4097)))
-		return ;
-	cwd = getcwd(buff, 4096);
-	ret = 0;
-	i = 0;
-	while (cwd[i]  && ret < 3)
-	{
-		if (cwd[i] == '\\')
-			ret++;
-		i++;
-	}
-	cwd = ft_substr(cwd, 0, i);
+	cwd = get_env_var("HOME");
 	cd_simple(cwd);
 }
 

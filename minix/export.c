@@ -9,7 +9,7 @@ void		handle_export(char *str)
 	while (*str == ' ')
 		str++;
 	tab = ft_strsplit(str, '=');
-	if (tab[1] != '\0')
+	if (tab[1])
 	{
 		i = 0;
 		err = 0;
