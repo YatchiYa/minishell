@@ -65,6 +65,8 @@ void		parse_line(char *line)
 		;
 	else if (strcmp(line, "clear") == 0)
 		system("clear");
+	else if (strcmp(line, "ls") == 0)
+		system("ls");
 	else if (line[0] == '"' || line[0] == '\'')
 		trim_parse(line);
 	else if (line[0] == '$')

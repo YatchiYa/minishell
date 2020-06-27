@@ -19,9 +19,11 @@
 # define IS_QUOTE(x) (x == '"' || x == '\'')
 
 char	        		**g_envv;
+int                     ctrld;
 
 
 void	        	*ft_memalloc(size_t size);
+int		strcontains(char *str, char c);
 char			**ft_strsplit(char const *s, char c);
 void	        	ft_freestrarr(char **arr);
 void	        	exit_shell(void);
@@ -33,6 +35,7 @@ int		        ft_strstartswith(char *s1, char *s2);
 char			*ft_strchr(const char *s, int c);
 char	        	*ft_strnew(size_t size);
 void        		signal_handler(int signo);
+void        		signal_handler3(int signo);
 void	        	display_prompt_msg(void);
 char        		*get_env_var(char *var);
 void			parse_line(char *line);

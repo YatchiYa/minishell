@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../minishell.h"
 #include <limits.h>
 
 int		ft_line_break(char *stock)
@@ -36,6 +36,7 @@ int		ft_read_file(char **stock, int fd)
 	char		*buffer;
 	int			ret;
 
+	ctrld = 1;
 	if (!(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1)))
 	|| read(fd, buffer, 0) < 0)
 		return (-1);
@@ -44,6 +45,8 @@ int		ft_read_file(char **stock, int fd)
 	while (!ft_line_break(*stock) && (ret = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[ret] = '\0';
+		*stock = ft_strjoin(*stock, "@");
+		ctrld = 0;
 		ft_fill_static(stock, ft_strjoin(*stock, buffer));
 	}
 	free(buffer);

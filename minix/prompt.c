@@ -42,6 +42,5 @@ void	display_prompt_msg(void)
 	}
 	else
 		display(cwd, i);
-	free(parsed_cwd);
 	free(buff);
 }
