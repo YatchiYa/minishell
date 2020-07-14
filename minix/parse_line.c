@@ -65,8 +65,6 @@ void		parse_line(char *line)
 		;
 	else if (strcmp(line, "clear") == 0)
 		system("clear");
-	else if (strcmp(line, "ls") == 0)
-		system("ls");
 	else if (line[0] == '"' || line[0] == '\'')
 		trim_parse(line);
 	else if (line[0] == '$')
@@ -78,20 +76,20 @@ void		parse_line(char *line)
 		handle_touch(str[1]);
 	else if (strcmp(str[0], "rm") == 0 || strcmp(str[0], "/bin/rm") == 0)
 		handle_rm(str[1]);
-	else if (strcmp(str[0], "exit") == 0 || strcmp(str[0], "/bin/exit") == 0)
-		exit_shell();
 	else if (strcmp(str[0], "echo") == 0 || strcmp(str[0], "/bin/echo") == 0)
 		handle_echo(str[1]);
-	else if (strcmp(str[0], "pwd") == 0 || strcmp(str[0], "/bin/pwd") == 0)
-		handle_pwd(str[1]);
+	else if (strcmp(str[0], "exit") == 0 || strcmp(str[0], "/bin/exit") == 0)
+		exit_shell();
 	else if (strcmp(str[0], "cd") == 0 || strcmp(str[0], "/bin/cd") == 0)
 		handle_cd(str[1]);
 	else if (strcmp(str[0], "env") == 0 || strcmp(str[0], "/bin/env") == 0)
 		handle_env(str[0], str[1]);
-	else if (strcmp(str[0], "export") == 0 || strcmp(str[0], "/bin/export") == 0)
-		handle_export(str[1]);
-	else if (strcmp(str[0], "unset") == 0 || strcmp(str[0], "/bin/unset") == 0)
-		handle_unset(str[1]);
+	else if (strcmp(str[0], "pwd") == 0 || strcmp(str[0], "/bin/pwd") == 0)
+		handle_pwd(str[1]);
 	else
-		ft_putstr("minishell => commande not found \n");
+	{
+		ft_putstr("minishell => commande < ");
+		ft_putstr(str[0]);
+		ft_putstr(" > not found \n");
+	}
 }

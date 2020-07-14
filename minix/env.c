@@ -61,6 +61,7 @@ void	set_env_var(char *key, char *value)
 
 	pos = find_env_var(key);
 	tmp = ft_strjoin("=", value);
+	ctrld = 0;
 	if (g_envv[pos])
 	{
 		free(g_envv[pos]);

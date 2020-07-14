@@ -73,7 +73,15 @@ void			handle_env(char *cmd, char *arg)
 		handle_redirect(tmp);
 	}
 	else if (strcmp(arg, "\0") != 0)
-		ft_putstr("env : no such file or directory \n");
+	{
+		ft_putstr("env : << ");
+		while (*arg && *arg != ' ')
+		{
+			write(1, arg, 1);
+			++arg;
+		}
+		ft_putstr(" >> : no such file or directory \n");
+	}
 	else
 		print_env();
 }

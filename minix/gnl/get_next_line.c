@@ -45,8 +45,6 @@ int		ft_read_file(char **stock, int fd)
 	while (!ft_line_break(*stock) && (ret = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[ret] = '\0';
-		*stock = ft_strjoin(*stock, "@");
-		ctrld = 0;
 		ft_fill_static(stock, ft_strjoin(*stock, buffer));
 	}
 	free(buffer);
@@ -65,7 +63,7 @@ int		get_next_line(int fd, char **line)
 	i = 0;
 	while (stock[fd][i] != '\n' && stock[fd][i])
 		i++;
-	*line = ft_substr(stock[fd], 0, i);
+	*line = ft_substr(stock[fd], 0, i + 1);
 	if ((ret == 0 && ft_strlenx(stock[fd]) > ft_strlenx(*line)) || ret > 0)
 		ret = 1;
 	ft_fill_static(&stock[fd],

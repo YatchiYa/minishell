@@ -75,24 +75,48 @@ void	extend(char *str, char c)
     ft_putstr("\n");   
 }
 
+int		hand_back_slash(char *str)
+{
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	str[i + 1] == 'n' ? ft_putstr("\n") : 0;
+	str[i + 1] == 't' ? ft_putstr("    ") : 0;
+	while (str[i] == '\\')
+	{
+		ret++;
+		if (ret == 3)
+		{
+			write(1, &str[i], 1);
+			return (2);
+		}
+		i++;
+	}
+	if (ret == 2)
+		return (1 + hand_back_slash(&str[i - 1]));
+	return (1);
+}
+
 void    handle_echo(char *str)
 {
-    	int		i;
-    	char	*dest;
-    	int		ret;
+	int		i;
+	char	*dest;
+	int		ret;
 	int		xet;
 	int		back;
 
-    	i = -1;
-    	dest = malloc_sortie(ft_strlenx(str));
-    	while (str[++i])
-        	dest[i] = str[i];
-    	dest[i] = '\0';
-    	i = -1;
+	i = -1;
+	dest = malloc_sortie(ft_strlenx(str));
+	while (str[++i])
+		dest[i] = str[i];
+	dest[i] = '\0';
+	i = -1;
 	ret = 0;
 	xet = 0;
 	back = 0;
-    	while (dest[++i])
+    while (dest[++i])
 	{
 		if (dest[i] == '"' && xet == 0)
 			ret++;
@@ -105,6 +129,8 @@ void    handle_echo(char *str)
 		extend(dest, '\'');
 	else if ((ssx(dest, ">|<") == 1) && (search_delim(dest, '"', ret) == 1))
 		handle_redirect(dest);
+	else if (str[ft_strlenx(str) - 2] == '\\' && (str[ft_strlenx(str) - 1] == '"' || str[ft_strlenx(str) - 1] == '\''))
+		ft_putstr("sytanx error\n");
 	else
 	{
 		i = 0;
@@ -125,6 +151,10 @@ void    handle_echo(char *str)
 					while (str[i] != ' ' && str[i] && str[i] != '\0')
 						i++;
 					i--;
+				}
+				else if (str[i] == '\\')
+				{
+					i += hand_back_slash(&str[i]);
 				}
 				else
 					write(1, &str[i], 1);

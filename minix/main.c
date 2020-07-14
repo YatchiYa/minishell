@@ -1,63 +1,67 @@
 
 #include "minishell.h"
 
-void	test(char **stock)
+void	signal_handler_main()
 {
-	char	*line;
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler2);
+	signal(SIGTSTP, signal_handler3);
+}
+
+void	exec_command(char *line)
+{
 	int		ret;
-	char		*buffer;
+	char	**tab;
 
-	line = NULL;
-	printf("-test-\n");
-
-	if (!(buffer = malloc(sizeof(char) * (4200 + 1)))
-	|| read(0, buffer, 0) < 0)
-		return ;
-	ret = read(0, buffer, 4200);
-	*stock = ft_strjoin(*stock, line);
-	if (strcontains(*stock, '\n') == 1)
-		printf("GOOD\n");
-	else
+	ret = 0;
+	line = ft_substr(line, 0, ft_strlenx(line) - 1);
+	tab = ft_strsplit(line, ';');
+	ret = 0;
+	while (tab[ret])
 	{
-		printf("BADD\n");
-		test(stock);
+		parse_line(tab[ret]);
+		ret++;
 	}
 }
 
 void	minishell(char **envv)
 {
     char		*line;
-    char		*nline;
-	char		**env;
+	char		*buff;
 	int			ret;
-	int			status;
 	char		**tab;
+	char		*first_char;
 
-	status = 1;
-	line = NULL;
-	nline = NULL;
-	ctrld = 0;
-	while (status)
+	buff = NULL;
+	line = strdup(" ");
+	while (1)
 	{
 		if (ctrld == 0)
 			display_prompt_msg();
-		signal(SIGINT, signal_handler);
-		signal(SIGQUIT, signal_handler2);
-		signal(SIGTSTP, signal_handler3);
-		ret = get_next_line(0, &line);
-		printf("---> ctrd = %d\n", ctrld);
+		signal_handler_main();
+		ret = get_next_line(0, &buff);
+		line = ft_strjoin(line, buff);
+		line = ft_substr(line, 1, ft_strlenx(line));
+		if (ctrld == 1)
+			first_char = ft_substr(line, 0, 1);
 		if (ft_strlenx(line) == 0 && ctrld == 1)
 			exit(0);
-		line = ft_substr(line, 1, ft_strlenx(line));
-		tab = ft_strsplit(line, ';');
-		ret = 0;
-		while (tab[ret])
+		if (line[ft_strlenx(line) - 1] != '\n')
 		{
-			if (ctrld == 0 && ft_strlenx(line) > 2)
-				parse_line(tab[ret]);
-			ret++;
+			free(buff);
+			if (ctrld == 1)
+				line = ft_strjoin(first_char, line);
+			ctrld = 1;
+			line = strdup(line);
 		}
-		free(line);
+		else
+		{
+			exec_command(line);
+			ctrld = 0;
+			free(buff);
+			free(line);
+			line = strdup(" ");
+		}
 	}
 }
 
